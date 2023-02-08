@@ -24,11 +24,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <jsp:include page="header.jsp" />
-<c:if test="${not empty productList}">
-            <spring:url value="./" var="productListUrl"/>
-            <c:set var="currentPage" value="${productList.number}"/>
-            <c:set var="totalPages" value="${productList.totalPages}"/>
-            <c:set var="productList" value="${productList.content}"/>
+<spring:url value="./" var="productListUrl" />
+<c:set var="currentPage" value="${productList.number}" />
+<c:set var="totalPages" value="${productList.totalPages}" />
+<c:set var="productList" value="${productList.content}" />
+
 <body>
     <div class="container" style="margin-top: 20px;">
         <div class="row">
@@ -47,38 +47,39 @@
             <a class="btn btn-primary" href="#myModalAddProduct" class="trigger-btn" data-toggle="modal">Add Product</a>
         </div>
         <p>${message}</p>
-        <div class="modal fade" id="myModalAddProduct">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add New Product</h4>
-                        <button type="button" class="btn-close" aria-label="Close" data-dismiss="modal"></button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <form:form action="newProducts" method="POST" modelAttribute="product">
-                            <div class="form-group">
-                                <label class="control-label">Name (*)</label>
-                                <input name="name" type="text" class="form-control" placeholder="Name"
-                                    required="true" />
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Price (*)</label>
-                                <input name="price" type="number" class="form-control" placeholder="Price"
-                                    required="true" />
-                            </div>
-                            <br>
-                            <div class="footer" style="display:flex; justify-content: center;">
-                                <button class="btn btn-primary" type="submit" style="width: 100%">Add</button>
-                            </div>
-                        </form:form>
+        <c:if test="${not empty productList}">
+            <div class="modal fade" id="myModalAddProduct">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add New Product</h4>
+                            <button type="button" class="btn-close" aria-label="Close" data-dismiss="modal"></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form:form action="newProducts" method="POST" modelAttribute="product">
+                                <div class="form-group">
+                                    <label class="control-label">Name (*)</label>
+                                    <input name="name" type="text" class="form-control" placeholder="Name"
+                                        required="true" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Price (*)</label>
+                                    <input name="price" type="number" class="form-control" placeholder="Price"
+                                        required="true" />
+                                </div>
+                                <br>
+                                <div class="footer" style="display:flex; justify-content: center;">
+                                    <button class="btn btn-primary" type="submit" style="width: 100%">Add</button>
+                                </div>
+                            </form:form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-10" style="width:100%;">
+            <div class="col-xs-12 col-sm-12 col-md-10" style="width:100%;">
 
                 <table class="table">
                     <thead class="thead-dark">
@@ -212,34 +213,35 @@
                         </c:forEach>
                     </tbody>
                 </table>
-        </div>
-<div class="footer" style="width: 100%; display: flex; justify-content: center;">
-            <spring:url value="./search?searchInput=${searchInput}" var="productListUrl" />
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li class="page-item ${currentPage == 0 ? 'disabled' : ''}">
-                        <spring:url value="${productListUrl}" var="previousPageUrl">
-                            <spring:param name="page" value="${currentPage - 1}" />
-                        </spring:url>
-                        <a class="page-link" href="${previousPageUrl}" tabindex="-1"><<</a>
-                    </li>
-                    <c:forEach var="i" begin="0" end="${totalPages - 1}">
-                        <spring:url value="${productListUrl}" var="pageUrl">
-                            <spring:param name="page" value="${i}" />
-                        </spring:url>
-                        <li class="page-item ${currentPage == i ? 'active' : ''}">
-                            <a class="page-link" href="${pageUrl}">${i + 1}</a>
+            </div>
+            <div class="footer" style="width: 100%; display: flex; justify-content: center;">
+                <spring:url value="./search?searchInput=${searchInput}" var="productListUrl" />
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item ${currentPage == 0 ? 'disabled' : ''}">
+                            <spring:url value="${productListUrl}" var="previousPageUrl">
+                                <spring:param name="page" value="${currentPage - 1}" />
+                            </spring:url>
+                            <a class="page-link" href="${previousPageUrl}" tabindex="-1">
+                                <<</a>
                         </li>
-                    </c:forEach>
-                    <li class="page-item ${currentPage == totalPages - 1 ? 'disabled' : ''}">
-                        <spring:url value="${productListUrl}" var="nextPageUrl">
-                            <spring:param name="page" value="${currentPage + 1}" />
-                        </spring:url>
-                        <a class="page-link" href="${nextPageUrl}">>></a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+                        <c:forEach var="i" begin="0" end="${totalPages - 1}">
+                            <spring:url value="${productListUrl}" var="pageUrl">
+                                <spring:param name="page" value="${i}" />
+                            </spring:url>
+                            <li class="page-item ${currentPage == i ? 'active' : ''}">
+                                <a class="page-link" href="${pageUrl}">${i + 1}</a>
+                            </li>
+                        </c:forEach>
+                        <li class="page-item ${currentPage == totalPages - 1 ? 'disabled' : ''}">
+                            <spring:url value="${productListUrl}" var="nextPageUrl">
+                                <spring:param name="page" value="${currentPage + 1}" />
+                            </spring:url>
+                            <a class="page-link" href="${nextPageUrl}">>></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </c:if>
         <c:if test="${productList.size() == 0}">
             <br>
