@@ -32,8 +32,13 @@ public class ProductController {
     public String showProducts(Model model, @RequestParam(name="searchInput") String searchInput, @RequestParam(defaultValue = "0") int page,
                                @RequestParam(defaultValue = "2") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<ProductEntity> productList = (Page<ProductEntity>) productService.getProductsByName(searchInput, pageable);
-        model.addAttribute("productList", productList);
+        Page<ProductEntity> searchList;
+        if (searchInput.isEmpty()) {
+            searchList = (Page<ProductEntity>) productService.getProducts();
+        } else {
+            searchList = productService.getProductsByName(searchInput, pageable);
+        }
+        model.addAttribute("productList", searchList);
         model.addAttribute("searchInput", searchInput);
         return "productList";
     }
