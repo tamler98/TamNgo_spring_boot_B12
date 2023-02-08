@@ -118,86 +118,97 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    <a class="btn btn-warning" href="#edit${product.id}" class="trigger-btn"
+                                        data-toggle="modal">Edit</a>
+
+
+                                    <div class="modal fade" id="edit${product.id}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Edit Product</h4>
+                                                    <button type="button" class="btn-close" aria-label="Close"
+                                                        data-dismiss="modal"></button>
+                                                </div>
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+
+                                                    <form:form action="edit/updateProduct/${product.id}" method="POST"
+                                                        modelAttribute="product">
+                                                        <div class="form-group">
+                                                            <label class="control-label">ID</label>
+                                                            <input value="${product.id}" path="id" type="text"
+                                                                class="form-control" id="id" placeholder="ID"
+                                                                disabled="true" />
+                                                            <hidden path="id" />
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Name (*)</label>
+                                                            <input value="${product.name}" path="newName" name="newName"
+                                                                type="text" class="form-control" placeholder="Name"
+                                                                required="true" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Price (*)</label>
+                                                            <input value="${product.price}" path="newPrice"
+                                                                name="newPrice" type="number" class="form-control"
+                                                                placeholder="Price" required="true" />
+                                                        </div>
+                                                        <br>
+                                                        <div class="footer"
+                                                            style="display:flex; justify-content: center;">
+                                                            <button class="btn btn-primary" type="submit"
+                                                                style="width: 100%">Save</button>
+                                                        </div>
+                                                    </form:form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <a class="btn btn-danger" href="#myModalDelete${product.id}" class="trigger-btn"
+                                        data-toggle="modal" data-name="${product.id}?">Delete</a>
+                                </td>
+
+                                <div id="myModalDelete${product.id}" class="modal fade">
+                                    <div class="modal-dialog modal-confirm">
+                                        <div class="modal-content">
+                                            <div class="modal-header flex-column">
+                                                <div class="icon-box">
+                                                    <i class="fal fa-times">&#9749;</i>
+                                                </div>
+                                                <h4 class="modal-title w-100">Are you sure?</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-hidden="true">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Do you really want to delete product "${product.name}"? This process
+                                                    cannot
+                                                    be undone.</p>
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cancel</button>
+                                                <button type="button" class="btn btn-danger"
+                                                    onclick="location.href='delete/${product.id}'">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
         </div>
-
-        <a class="btn btn-warning" href="#edit${product.id}" class="trigger-btn" data-toggle="modal">Edit</a>
-
-
-        <div class="modal fade" id="edit${product.id}">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Edit Product</h4>
-                        <button type="button" class="btn-close" aria-label="Close" data-dismiss="modal"></button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body">
-
-                        <form:form action="edit/updateProduct/${product.id}" method="POST" modelAttribute="product">
-                            <div class="form-group">
-                                <label class="control-label">ID</label>
-                                <input value="${product.id}" path="id" type="text" class="form-control" id="id"
-                                    placeholder="ID" disabled="true" />
-                                <hidden path="id" />
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label">Name (*)</label>
-                                <input value="${product.name}" path="newName" name="newName" type="text"
-                                    class="form-control" placeholder="Name" required="true" />
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Price (*)</label>
-                                <input value="${product.price}" path="newPrice" name="newPrice" type="number"
-                                    class="form-control" placeholder="Price" required="true" />
-                            </div>
-                            <br>
-                            <div class="footer" style="display:flex; justify-content: center;">
-                                <button class="btn btn-primary" type="submit" style="width: 100%">Save</button>
-                            </div>
-                        </form:form>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
-
-        <a class="btn btn-danger" href="#myModalDelete${product.id}" class="trigger-btn" data-toggle="modal"
-            data-name="${product.id}?">Delete</a>
-        </td>
-
-        <div id="myModalDelete${product.id}" class="modal fade">
-            <div class="modal-dialog modal-confirm">
-                <div class="modal-content">
-                    <div class="modal-header flex-column">
-                        <div class="icon-box">
-                            <i class="fal fa-times">&#9749;</i>
-                        </div>
-                        <h4 class="modal-title w-100">Are you sure?</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Do you really want to delete product "${product.name}"? This process
-                            cannot
-                            be undone.</p>
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger"
-                            onclick="location.href='delete/${product.id}'">Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        </tr>
-        </c:forEach>
-        </tbody>
-        </table>
-        </c:if>
         <c:if test="${products.size() == 0}">
             <br>
             <div class="alert alert-warning">
